@@ -1,0 +1,226 @@
+openapi: "3.0.0"
+
+info:
+  description: "Doctors and Rooms API"
+  version: "1.0.0"
+  title: "Doctors and Rooms"
+
+servers:
+  - url: "/api"
+
+tags:
+  - name: "resources"
+    description: "App resources (doctor & rooms)"
+  - name: "consultations"
+    description: "Consultations"
+
+paths:
+
+  /resources:
+    get:
+      tags:
+        - "resources"
+      summary: "Get resources"
+      responses:
+        200:
+          description: "Object containing 2 arrays: doctors & rooms"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  doctors:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/Doctor"
+                  rooms:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/Room"
+
+    post:
+      tags:
+        - "resources"
+      summary: "Post resources"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                doctors:
+                  type: "array"
+                  items:
+                    $ref: "#/components/schemas/Doctor"
+                rooms:
+                  type: "array" 
+                  items:
+                    $ref: "#/components/schemas/Room"
+      responses:
+        200:
+          description: "Resources created"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+
+
+  # get: {
+  #   '/resources': getResources,
+  #   '/consultations': getConsultations,
+  #   '/availability': getAvailability,
+  # },
+  # post: {
+  #   '/resources': postResources,
+  #   '/consultations': postConsultations,
+  # },
+
+  /consultations:
+    get:
+      tags:
+        - "consultations"
+      summary: "Get consultations"
+      responses:
+        200:
+          description: "Array of consultations"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Consultation"
+
+    post:
+      tags:
+        - "consultations"
+      summary: "Post consultations"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "array"
+              items:
+                $ref: "#/components/schemas/Consultation"
+      responses:
+        200:
+          description: "Consultations created"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+
+  /availability:
+    get:
+      tags:
+        - "availability"
+      summary: "Check times availability"
+      parameters:
+        - in: query
+          name: begin
+          schema:
+            type: string
+            format: "date-time"
+          example: "2020-01-27T13:00:00+08:00"
+        - in: query
+          name: end
+          schema:
+            type: string
+            format: "date-time"
+          example: "2020-01-27T17:00:00+08:00"
+        - in: query
+          name: duration
+          schema:
+            type: number
+          example: 30
+      responses:
+        200:
+          description: "Array of times"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    begin:
+                      type: "string"
+                      format: "date-time"
+                    end:
+                      type: "string"
+                      format: "date-time"
+                  example:
+                    begin: "2020-01-28T13:00:00+08:00"
+                    end: "2020-01-28T15:00:00+08:00"
+
+components:
+  schemas:
+
+    Doctor:
+      type: "object"
+      required:
+        - id
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+        times:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              begin:
+                type: "string"
+              end:
+                type: "string"
+            example:
+              begin: "09:00"
+              end: "17:00"
+
+    Room:
+      type: "object"
+      required:
+        - id
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+        times:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              begin:
+                type: "string"
+              end:
+                type: "string"
+            example:
+              begin: "09:00"
+              end: "17:00"
+
+    Consultation:
+      type: "object"
+      required:
+        - id
+      properties:
+        id:
+          type: "integer"
+        doctorId:
+          type: "integer"
+        roomId:
+          type: "integer"
+        begin:
+          type: "string"
+          format: "date-time"
+        end:
+          type: "string"
+          format: "date-time"

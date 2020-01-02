@@ -1,0 +1,36 @@
+{
+  "name": "task-doctors-and-rooms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "db:migrate": "sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
+    "start": "export NODE_ENV=development && npm run db:migrate && ts-node index",
+    "start:dev": "export NODE_ENV=development && npm run db:migrate && nodemon",
+    "test:consultations": "export NODE_ENV=test && npm run db:migrate && ts-mocha consultations/test/index.ts --exit",
+    "test:consultations:e2e": "export NODE_ENV=test && npm run db:migrate && ts-mocha consultations/test/consultations.e2e.ts --exit",
+    "test:consultations:spec": "ts-mocha consultations/test/consultations.spec.ts --exit"
+  },
+  "author": "Rustem Islamuratov",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.0",
+    "koa-oas3": "^0.16.1",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.14",
+    "mocha": "^6.1.4",
+    "moment": "^2.24.0",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.2",
+    "sequelize": "^5.10.0",
+    "sequelize-cli": "^5.5.0",
+    "supertest": "^4.0.2",
+    "ts-mocha": "^6.0.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  }
+}
