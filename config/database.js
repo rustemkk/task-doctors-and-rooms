@@ -1,7 +1,7 @@
 module.exports = {
   development: {
-    username: '***',
-    password: '***',
+    username: 'rustemk',
+    password: '4100',
     database: 'doctors_and_rooms',
     host: 'localhost',
     dialect: 'mysql',
@@ -9,8 +9,8 @@ module.exports = {
     port: '3306'
   },
   test: {
-    username: '***',
-    password: '***',
+    username: 'rustemk',
+    password: '4100',
     database: 'doctors_and_rooms_test',
     host: 'localhost',
     dialect: 'mysql',
